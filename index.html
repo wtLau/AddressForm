@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/intlTelInput.css">
+    <title>Address Form</title>
+</head>
+
+<body>
+    <form class="address-form">
+        <h2>Address Form</h2>
+        <div class="address1">
+            <p>Address line 1</p>
+            <input type="text" maxlength="30" placeholder="Enter your address" name="address1" size="45" required/>
+        </div>
+        <div class="address2">
+            <p>Address line 2 (optional)</p>
+            <input type="text" maxlength="30" placeholder="Optional" size="45" name="address2" />
+        </div>
+        <div class="city">
+            <p>City</p>
+            <input type="text" maxlength="20" size="45" placeholder="City" name="city" required />
+        </div>
+        <div class="province">
+            <p>Province</p>
+            <input type="text" size="45" placeholder="State/Province" name="province" required />
+        </div>
+        <div class="country">
+            <p>Country</p>
+            <input type="text" size="45" placeholder="Country" name="country" required />
+        </div>
+        <div class="zipcode">
+            <p>Zip Code</p>
+            <input type="text" maxlength="7" size="10" placeholder="Zip Code" name="zipcode" required />
+        </div>
+        <div>
+            <p>Phone</p>
+            <input id="phone" type="tel">
+        </div>
+        <div>
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="./js/intlTelInput.js"></script>
+    <script>
+        $("#phone").intlTelInput({
+            // allowDropdown: false,
+            // autoHideDialCode: false,
+            autoPlaceholder: "off",
+            // dropdownContainer: "body",
+            // excludeCountries: ["us"],
+            // formatOnDisplay: false,
+            geoIpLookup: function (callback) {
+                $.get("http://ipinfo.io", function () { }, "jsonp").always(function (resp) {
+                    var countryCode = (resp && resp.country) ? resp.country : "";
+                    callback(countryCode);
+                });
+            },
+            // hiddenInput: "full_number",
+            initialCountry: "auto",
+            // nationalMode: false,
+            onlyCountries: ['us', 'gb', 'ch', 'ca', 'do'],
+            // placeholderNumberType: "MOBILE",
+            // preferredCountries: ['cn', 'jp'],
+            // separateDialCode: true,
+            // utilsScript: "./js/utils.js"
+        });
+    </script>
+</body>
+
+</html>
